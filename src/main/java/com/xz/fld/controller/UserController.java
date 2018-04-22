@@ -51,6 +51,7 @@ public class UserController extends BaseController {
 
         try {
             String code = IDUtils.createCode();
+            System.out.println(">>>>>>>>>>手机" + phone + "验证码=" + code);
             System.out.println(phone);
             String postData = "sname=DL-wanglu&spwd=wl12345678wl&scorpid=&sprdid=1012888&sdst=" + phone + "&smsg=" + String.format(MessageFormat.registerMessage, code);
             System.out.println(postData);
