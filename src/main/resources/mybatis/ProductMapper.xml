@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.fld.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.xz.fld.domain.Product">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="limit_up" jdbcType="INTEGER" property="limitUp" />
+    <result column="limit_down" jdbcType="INTEGER" property="limitDown" />
+    <result column="rate_up" jdbcType="VARCHAR" property="rateUp" />
+    <result column="rate_down" jdbcType="VARCHAR" property="rateDown" />
+    <result column="product_type" jdbcType="TINYINT" property="productType" />
+    <result column="product_logo" jdbcType="VARCHAR" property="productLogo" />
+    <result column="cooper_type" jdbcType="TINYINT" property="cooperType" />
+    <result column="cooper_ratio" jdbcType="VARCHAR" property="cooperRatio" />
+    <result column="cpa_price" jdbcType="VARCHAR" property="cpaPrice" />
+    <result column="rebate_type" jdbcType="TINYINT" property="rebateType" />
+    <result column="rebate_ratio" jdbcType="VARCHAR" property="rebateRatio" />
+    <result column="rebate_price" jdbcType="VARCHAR" property="rebatePrice" />
+    <result column="product_status" jdbcType="TINYINT" property="productStatus" />
+    <result column="product_introduce" jdbcType="VARCHAR" property="productIntroduce" />
+    <result column="product_url" jdbcType="VARCHAR" property="productUrl" />
+    <result column="product_rank" jdbcType="INTEGER" property="productRank" />
+    <result column="product_lable2" jdbcType="VARCHAR" property="productLable2" />
+    <result column="product_lable1" jdbcType="VARCHAR" property="productLable1" />
+    <result column="product_lable3" jdbcType="VARCHAR" property="productLable3" />
+    <result column="product_lable4" jdbcType="VARCHAR" property="productLable4" />
+    <result column="product_lable5" jdbcType="VARCHAR" property="productLable5" />
+    <result column="product_deadline" jdbcType="TIMESTAMP" property="productDeadline" />
+    <result column="apply_conditions" jdbcType="VARCHAR" property="applyConditions" />
+    <result column="response_type" jdbcType="TINYINT" property="responseType" />
+    <result column="hot_product_flag" jdbcType="TINYINT" property="hotProductFlag" />
+    <result column="selected_product_flag" jdbcType="TINYINT" property="selectedProductFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    product_id, product_name, company_name, limit_up, limit_down, rate_up, rate_down, 
+    product_type, product_logo, cooper_type, cooper_ratio, cpa_price, rebate_type, rebate_ratio, 
+    rebate_price, product_status, product_introduce, product_url, product_rank, product_lable2, 
+    product_lable1, product_lable3, product_lable4, product_lable5, product_deadline, 
+    apply_conditions, response_type, hot_product_flag, selected_product_flag, create_time, 
+    modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xz.fld.domain.Product">
+    insert into tb_product (product_id, product_name, company_name, 
+      limit_up, limit_down, rate_up, 
+      rate_down, product_type, product_logo, 
+      cooper_type, cooper_ratio, cpa_price, 
+      rebate_type, rebate_ratio, rebate_price, 
+      product_status, product_introduce, product_url, 
+      product_rank, product_lable2, product_lable1, 
+      product_lable3, product_lable4, product_lable5, 
+      product_deadline, apply_conditions, response_type, 
+      hot_product_flag, selected_product_flag, create_time, 
+      modify_time)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{limitUp,jdbcType=INTEGER}, #{limitDown,jdbcType=INTEGER}, #{rateUp,jdbcType=VARCHAR}, 
+      #{rateDown,jdbcType=VARCHAR}, #{productType,jdbcType=TINYINT}, #{productLogo,jdbcType=VARCHAR}, 
+      #{cooperType,jdbcType=TINYINT}, #{cooperRatio,jdbcType=VARCHAR}, #{cpaPrice,jdbcType=VARCHAR}, 
+      #{rebateType,jdbcType=TINYINT}, #{rebateRatio,jdbcType=VARCHAR}, #{rebatePrice,jdbcType=VARCHAR}, 
+      #{productStatus,jdbcType=TINYINT}, #{productIntroduce,jdbcType=VARCHAR}, #{productUrl,jdbcType=VARCHAR}, 
+      #{productRank,jdbcType=INTEGER}, #{productLable2,jdbcType=VARCHAR}, #{productLable1,jdbcType=VARCHAR}, 
+      #{productLable3,jdbcType=VARCHAR}, #{productLable4,jdbcType=VARCHAR}, #{productLable5,jdbcType=VARCHAR}, 
+      #{productDeadline,jdbcType=TIMESTAMP}, #{applyConditions,jdbcType=VARCHAR}, #{responseType,jdbcType=TINYINT}, 
+      #{hotProductFlag,jdbcType=TINYINT}, #{selectedProductFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xz.fld.domain.Product">
+    insert into tb_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="companyName != null">
+        company_name,
+      </if>
+      <if test="limitUp != null">
+        limit_up,
+      </if>
+      <if test="limitDown != null">
+        limit_down,
+      </if>
+      <if test="rateUp != null">
+        rate_up,
+      </if>
+      <if test="rateDown != null">
+        rate_down,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="productLogo != null">
+        product_logo,
+      </if>
+      <if test="cooperType != null">
+        cooper_type,
+      </if>
+      <if test="cooperRatio != null">
+        cooper_ratio,
+      </if>
+      <if test="cpaPrice != null">
+        cpa_price,
+      </if>
+      <if test="rebateType != null">
+        rebate_type,
+      </if>
+      <if test="rebateRatio != null">
+        rebate_ratio,
+      </if>
+      <if test="rebatePrice != null">
+        rebate_price,
+      </if>
+      <if test="productStatus != null">
+        product_status,
+      </if>
+      <if test="productIntroduce != null">
+        product_introduce,
+      </if>
+      <if test="productUrl != null">
+        product_url,
+      </if>
+      <if test="productRank != null">
+        product_rank,
+      </if>
+      <if test="productLable2 != null">
+        product_lable2,
+      </if>
+      <if test="productLable1 != null">
+        product_lable1,
+      </if>
+      <if test="productLable3 != null">
+        product_lable3,
+      </if>
+      <if test="productLable4 != null">
+        product_lable4,
+      </if>
+      <if test="productLable5 != null">
+        product_lable5,
+      </if>
+      <if test="productDeadline != null">
+        product_deadline,
+      </if>
+      <if test="applyConditions != null">
+        apply_conditions,
+      </if>
+      <if test="responseType != null">
+        response_type,
+      </if>
+      <if test="hotProductFlag != null">
+        hot_product_flag,
+      </if>
+      <if test="selectedProductFlag != null">
+        selected_product_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="limitUp != null">
+        #{limitUp,jdbcType=INTEGER},
+      </if>
+      <if test="limitDown != null">
+        #{limitDown,jdbcType=INTEGER},
+      </if>
+      <if test="rateUp != null">
+        #{rateUp,jdbcType=VARCHAR},
+      </if>
+      <if test="rateDown != null">
+        #{rateDown,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=TINYINT},
+      </if>
+      <if test="productLogo != null">
+        #{productLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="cooperType != null">
+        #{cooperType,jdbcType=TINYINT},
+      </if>
+      <if test="cooperRatio != null">
+        #{cooperRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="cpaPrice != null">
+        #{cpaPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="rebateType != null">
+        #{rebateType,jdbcType=TINYINT},
+      </if>
+      <if test="rebateRatio != null">
+        #{rebateRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="rebatePrice != null">
+        #{rebatePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="productStatus != null">
+        #{productStatus,jdbcType=TINYINT},
+      </if>
+      <if test="productIntroduce != null">
+        #{productIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="productUrl != null">
+        #{productUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productRank != null">
+        #{productRank,jdbcType=INTEGER},
+      </if>
+      <if test="productLable2 != null">
+        #{productLable2,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable1 != null">
+        #{productLable1,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable3 != null">
+        #{productLable3,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable4 != null">
+        #{productLable4,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable5 != null">
+        #{productLable5,jdbcType=VARCHAR},
+      </if>
+      <if test="productDeadline != null">
+        #{productDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyConditions != null">
+        #{applyConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="responseType != null">
+        #{responseType,jdbcType=TINYINT},
+      </if>
+      <if test="hotProductFlag != null">
+        #{hotProductFlag,jdbcType=TINYINT},
+      </if>
+      <if test="selectedProductFlag != null">
+        #{selectedProductFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xz.fld.domain.Product">
+    update tb_product
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="limitUp != null">
+        limit_up = #{limitUp,jdbcType=INTEGER},
+      </if>
+      <if test="limitDown != null">
+        limit_down = #{limitDown,jdbcType=INTEGER},
+      </if>
+      <if test="rateUp != null">
+        rate_up = #{rateUp,jdbcType=VARCHAR},
+      </if>
+      <if test="rateDown != null">
+        rate_down = #{rateDown,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=TINYINT},
+      </if>
+      <if test="productLogo != null">
+        product_logo = #{productLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="cooperType != null">
+        cooper_type = #{cooperType,jdbcType=TINYINT},
+      </if>
+      <if test="cooperRatio != null">
+        cooper_ratio = #{cooperRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="cpaPrice != null">
+        cpa_price = #{cpaPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="rebateType != null">
+        rebate_type = #{rebateType,jdbcType=TINYINT},
+      </if>
+      <if test="rebateRatio != null">
+        rebate_ratio = #{rebateRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="rebatePrice != null">
+        rebate_price = #{rebatePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="productStatus != null">
+        product_status = #{productStatus,jdbcType=TINYINT},
+      </if>
+      <if test="productIntroduce != null">
+        product_introduce = #{productIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="productUrl != null">
+        product_url = #{productUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productRank != null">
+        product_rank = #{productRank,jdbcType=INTEGER},
+      </if>
+      <if test="productLable2 != null">
+        product_lable2 = #{productLable2,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable1 != null">
+        product_lable1 = #{productLable1,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable3 != null">
+        product_lable3 = #{productLable3,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable4 != null">
+        product_lable4 = #{productLable4,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable5 != null">
+        product_lable5 = #{productLable5,jdbcType=VARCHAR},
+      </if>
+      <if test="productDeadline != null">
+        product_deadline = #{productDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyConditions != null">
+        apply_conditions = #{applyConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="responseType != null">
+        response_type = #{responseType,jdbcType=TINYINT},
+      </if>
+      <if test="hotProductFlag != null">
+        hot_product_flag = #{hotProductFlag,jdbcType=TINYINT},
+      </if>
+      <if test="selectedProductFlag != null">
+        selected_product_flag = #{selectedProductFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xz.fld.domain.Product">
+    update tb_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      limit_up = #{limitUp,jdbcType=INTEGER},
+      limit_down = #{limitDown,jdbcType=INTEGER},
+      rate_up = #{rateUp,jdbcType=VARCHAR},
+      rate_down = #{rateDown,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=TINYINT},
+      product_logo = #{productLogo,jdbcType=VARCHAR},
+      cooper_type = #{cooperType,jdbcType=TINYINT},
+      cooper_ratio = #{cooperRatio,jdbcType=VARCHAR},
+      cpa_price = #{cpaPrice,jdbcType=VARCHAR},
+      rebate_type = #{rebateType,jdbcType=TINYINT},
+      rebate_ratio = #{rebateRatio,jdbcType=VARCHAR},
+      rebate_price = #{rebatePrice,jdbcType=VARCHAR},
+      product_status = #{productStatus,jdbcType=TINYINT},
+      product_introduce = #{productIntroduce,jdbcType=VARCHAR},
+      product_url = #{productUrl,jdbcType=VARCHAR},
+      product_rank = #{productRank,jdbcType=INTEGER},
+      product_lable2 = #{productLable2,jdbcType=VARCHAR},
+      product_lable1 = #{productLable1,jdbcType=VARCHAR},
+      product_lable3 = #{productLable3,jdbcType=VARCHAR},
+      product_lable4 = #{productLable4,jdbcType=VARCHAR},
+      product_lable5 = #{productLable5,jdbcType=VARCHAR},
+      product_deadline = #{productDeadline,jdbcType=TIMESTAMP},
+      apply_conditions = #{applyConditions,jdbcType=VARCHAR},
+      response_type = #{responseType,jdbcType=TINYINT},
+      hot_product_flag = #{hotProductFlag,jdbcType=TINYINT},
+      selected_product_flag = #{selectedProductFlag,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

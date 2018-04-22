@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.fld.mapper.UserDetailMapper">
+  <resultMap id="BaseResultMap" type="com.xz.fld.domain.UserDetail">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="kittyname" jdbcType="VARCHAR" property="kittyname" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="identity_id" jdbcType="VARCHAR" property="identityId" />
+    <result column="identity_type" jdbcType="TINYINT" property="identityType" />
+    <result column="my_invit_id" jdbcType="VARCHAR" property="myInvitId" />
+    <result column="my_invit_num" jdbcType="INTEGER" property="myInvitNum" />
+    <result column="head_picture" jdbcType="VARCHAR" property="headPicture" />
+    <result column="member_no" jdbcType="VARCHAR" property="memberNo" />
+    <result column="member_class" jdbcType="VARCHAR" property="memberClass" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, age, name, kittyname, gender, username, identity_id, identity_type, my_invit_id, 
+    my_invit_num, head_picture, member_no, member_class, phone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_userdetail
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_userdetail
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xz.fld.domain.UserDetail">
+    insert into tb_userdetail (user_id, age, name, 
+      kittyname, gender, username, 
+      identity_id, identity_type, my_invit_id, 
+      my_invit_num, head_picture, member_no, 
+      member_class, phone)
+    values (#{userId,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{kittyname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{identityId,jdbcType=VARCHAR}, #{identityType,jdbcType=TINYINT}, #{myInvitId,jdbcType=VARCHAR}, 
+      #{myInvitNum,jdbcType=INTEGER}, #{headPicture,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, 
+      #{memberClass,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xz.fld.domain.UserDetail">
+    insert into tb_userdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="kittyname != null">
+        kittyname,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="identityId != null">
+        identity_id,
+      </if>
+      <if test="identityType != null">
+        identity_type,
+      </if>
+      <if test="myInvitId != null">
+        my_invit_id,
+      </if>
+      <if test="myInvitNum != null">
+        my_invit_num,
+      </if>
+      <if test="headPicture != null">
+        head_picture,
+      </if>
+      <if test="memberNo != null">
+        member_no,
+      </if>
+      <if test="memberClass != null">
+        member_class,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="kittyname != null">
+        #{kittyname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="identityId != null">
+        #{identityId,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null">
+        #{identityType,jdbcType=TINYINT},
+      </if>
+      <if test="myInvitId != null">
+        #{myInvitId,jdbcType=VARCHAR},
+      </if>
+      <if test="myInvitNum != null">
+        #{myInvitNum,jdbcType=INTEGER},
+      </if>
+      <if test="headPicture != null">
+        #{headPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberClass != null">
+        #{memberClass,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xz.fld.domain.UserDetail">
+    update tb_userdetail
+    <set>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="kittyname != null">
+        kittyname = #{kittyname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="identityId != null">
+        identity_id = #{identityId,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null">
+        identity_type = #{identityType,jdbcType=TINYINT},
+      </if>
+      <if test="myInvitId != null">
+        my_invit_id = #{myInvitId,jdbcType=VARCHAR},
+      </if>
+      <if test="myInvitNum != null">
+        my_invit_num = #{myInvitNum,jdbcType=INTEGER},
+      </if>
+      <if test="headPicture != null">
+        head_picture = #{headPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        member_no = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberClass != null">
+        member_class = #{memberClass,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xz.fld.domain.UserDetail">
+    update tb_userdetail
+    set age = #{age,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      kittyname = #{kittyname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      identity_id = #{identityId,jdbcType=VARCHAR},
+      identity_type = #{identityType,jdbcType=TINYINT},
+      my_invit_id = #{myInvitId,jdbcType=VARCHAR},
+      my_invit_num = #{myInvitNum,jdbcType=INTEGER},
+      head_picture = #{headPicture,jdbcType=VARCHAR},
+      member_no = #{memberNo,jdbcType=VARCHAR},
+      member_class = #{memberClass,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>
