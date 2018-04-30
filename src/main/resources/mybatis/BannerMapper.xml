@@ -150,4 +150,11 @@
       biz_type = #{bizType,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="listBanner" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM tb_banner
+    WHERE status=#{status}
+    ORDER BY rank;
+  </select>
 </mapper>

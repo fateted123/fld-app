@@ -16,4 +16,7 @@ public abstract class BaseController {
 
     @Value("${message.code.ip.max.count}")
     protected int ipCodeCount;
+
+    @Value("${banner.image.local}")
+    protected String bannerUrl;
 }

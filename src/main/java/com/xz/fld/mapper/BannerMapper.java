@@ -1,6 +1,9 @@
 package com.xz.fld.mapper;
 
 import com.xz.fld.domain.Banner;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface BannerMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface BannerMapper {
     int updateByPrimaryKeySelective(Banner record);
 
     int updateByPrimaryKey(Banner record);
+
+    List<Banner> listBanner(@Param("status") byte status);
 }

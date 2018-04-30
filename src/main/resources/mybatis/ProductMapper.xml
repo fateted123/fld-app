@@ -399,4 +399,34 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
+
+  <select id="listProduct" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM tb_product
+    <trim prefix="WHERE" prefixOverrides="AND|OR ">
+      <if test="status != null">
+        product_status=#{status}
+      </if>
+    </trim>
+    order by product_status,product_rank, modify_time desc
+    limit #{offset}, #{pageSize}
+  </select>
+
+  <select id="listHotProduct" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM tb_product
+    WHERE hot_product_flag=1
+    AND
+    product_status = 1
+    order by product_rank, modify_time desc
+  </select>
+
+  <select id="listSelectedProduct" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM tb_product
+    WHERE selected_product_flag=1
+    AND
+    product_status = 1
+    order by product_rank, modify_time desc
+  </select>
 </mapper>
