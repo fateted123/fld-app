@@ -24,7 +24,7 @@ public class ImageController extends BaseController {
     public void showImage(@PathVariable("filename") String filename, HttpServletResponse response) {
 
         response.setContentType("image/png");
-        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(super.bannerUrl + filename));
+        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(super.imagePath + filename));
             OutputStream os = response.getOutputStream()) {
             byte[] buff = new byte[1024];
             int length = -1;

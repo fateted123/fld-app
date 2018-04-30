@@ -10,6 +10,7 @@ import com.xz.fld.service.CacheService;
 import com.xz.fld.service.UserService;
 import com.xz.fld.util.IDUtils;
 import com.xz.fld.util.IPUtils;
+import com.xz.fld.util.QRCodeUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -20,12 +21,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
@@ -173,6 +175,35 @@ public class UserController extends BaseController {
         String uid = accessTokenHandler.decodeToken(accessToken);
 
         return ResponseDTO.success(userService.getUserInfo(uid));
+    }
+
+    @RequestMapping(value = "/getInviteQRcode", method = RequestMethod.POST)
+    @ApiOperation(value = "用户邀请二维码", notes = "获取用户邀请二维码图片")
+    public void getInviteQRcode(@RequestHeader("access-token") String accessToken, HttpServletResponse response) {
+
+        if (null == accessToken || "".equals(accessToken)) {
+            return;
+        }
+
+        String uid = accessTokenHandler.decodeToken(accessToken);
+        String filename = "invite_" + uid ;
+        String context = "http://www.baidu.com";
+
+        Path file = Paths.get(imagePath + filename);
+        boolean fileExist = Files.exists(file, new LinkOption[]{ LinkOption.NOFOLLOW_LINKS});
+        if (!fileExist) {
+            QRCodeUtils.createQRCode(context, filename, imagePath);
+        }
+
+        response.setContentType("image/png");
+        try(OutputStream os = response.getOutputStream()) {
+            file = Paths.get(imagePath + filename);
+            os.write(Files.readAllBytes(file));
+            os.flush();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
     }
 
 
