@@ -9,9 +9,11 @@ import com.xz.fld.handler.AccessTokenHandler;
 import com.xz.fld.service.CacheService;
 import com.xz.fld.service.UserService;
 import com.xz.fld.util.IDUtils;
+import com.xz.fld.util.IPUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -44,17 +46,36 @@ public class UserController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "phone", value = "手机号码", required = true,  paramType = "query", dataType = "String")
     })
-    public ResponseDTO sendMsg(String phone, HttpServletRequest session, HttpServletResponse response) {
+    public ResponseDTO sendMsg(String phone, HttpServletRequest request, HttpServletRequest session, HttpServletResponse response) {
 
         OutputStreamWriter out = null;
         BufferedReader in = null;
 
         try {
+
+            String cacheCode = cacheService.getRegistCode(phone);
+            if (StringUtils.isNotBlank(cacheCode)) {
+                return ResponseDTO.failed("请稍后发送短信");
+            }
+
+            int count = cacheService.getCodeCounter(phone);
+            if (phoneNumCodeCount <= count) {
+                return ResponseDTO.failed("超过当天发送最大次数");
+            }
+
+            String ip = IPUtils.getIpAddr(request);
+            log.info("注册IP={}", ip);
+
+            int ipCount = cacheService.getIPCodeCounter(ip);
+            if (ipCodeCount <= ipCount) {
+                return ResponseDTO.failed("IP超过当天发送最大次数");
+            }
+
             String code = IDUtils.createCode();
-            System.out.println(">>>>>>>>>>手机" + phone + "验证码=" + code);
+            log.info(">>>>>>>>>>手机{},验证码{}", phone, code);
             System.out.println(phone);
-            String postData = "sname=DL-wanglu&spwd=wl12345678wl&scorpid=&sprdid=1012888&sdst=" + phone + "&smsg=" + String.format(MessageFormat.registerMessage, code);
-            System.out.println(postData);
+            String postData = "sname=dlxzkj00&spwd=1qazxsw2&scorpid=&sprdid=1012888&sdst=" + phone + "&smsg=" + String.format(MessageFormat.registerMessage, code);
+            log.info(postData);
             //发送POST请求
             URL url = new URL(sendMsgUrl);
             System.out.println(sendMsgUrl);
@@ -73,7 +94,7 @@ public class UserController extends BaseController {
             //获取响应状态
             System.out.println(conn.getResponseCode());
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("connect failed!");
+                log.info("{} send code connect failed!", phone);
                 return ResponseDTO.failed("发送失败");
             }
 
@@ -83,14 +104,18 @@ public class UserController extends BaseController {
             while ((line = in.readLine()) != null) {
                 result += line + "\n";
             }
-            System.out.println(result);
+            log.info(result);
 
+
+
+            cacheService.putCodeCounter(phone, count);
+            cacheService.putIPCodeCounter(ip, ipCount);
             cacheService.putRegistCode(code, phone);
 
-            System.out.println(">>>>>>cache code=" + cacheService.getRegistCode(phone));
+            log.info(">>>>>>cache code={}", cacheService.getRegistCode(phone));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return ResponseDTO.failed("发送失败");
         } finally {
             try {
@@ -128,7 +153,7 @@ public class UserController extends BaseController {
         User user = userService.login4Pwd(phone, password);
 
         String token = accessTokenHandler.createToken(user.getUserId());
-        System.out.println(token);
+        log.info(token);
 
         response.setHeader("access-token", token);
 
@@ -143,7 +168,7 @@ public class UserController extends BaseController {
             return ResponseDTO.failed("请先登录");
         }
 
-        System.out.println(">>>>>>>>>>>" + accessToken);
+        log.info(">>>>>>>>>>>{}", accessToken);
 
         String uid = accessTokenHandler.decodeToken(accessToken);
 

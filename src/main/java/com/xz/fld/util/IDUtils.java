@@ -22,7 +22,7 @@ public class IDUtils {
     public static String createCode() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         String code = "";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             code += random.nextInt(nums.length);
         }
 
