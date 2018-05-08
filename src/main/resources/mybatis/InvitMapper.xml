@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.fld.mapper.InvitMapper">
+  <resultMap id="BaseResultMap" type="com.xz.fld.domain.Invit">
+    <result column="invit_user_id" jdbcType="VARCHAR" property="invitUserId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="invit_name" jdbcType="VARCHAR" property="invitName" />
+    <result column="invit_mobile" jdbcType="VARCHAR" property="invitMobile" />
+    <result column="regtime" jdbcType="DATE" property="regtime" />
+    <result column="reg_channel" jdbcType="TINYINT" property="regChannel" />
+  </resultMap>
+  <insert id="insert" parameterType="com.xz.fld.domain.Invit">
+    insert into tb_invit (invit_user_id, user_id, invit_name, 
+      invit_mobile, regtime, reg_channel
+      )
+    values (#{invitUserId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{invitName,jdbcType=VARCHAR}, 
+      #{invitMobile,jdbcType=VARCHAR}, #{regtime,jdbcType=DATE}, #{regChannel,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xz.fld.domain.Invit">
+    insert into tb_invit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="invitUserId != null">
+        invit_user_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="invitName != null">
+        invit_name,
+      </if>
+      <if test="invitMobile != null">
+        invit_mobile,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="regChannel != null">
+        reg_channel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="invitUserId != null">
+        #{invitUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="invitName != null">
+        #{invitName,jdbcType=VARCHAR},
+      </if>
+      <if test="invitMobile != null">
+        #{invitMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=DATE},
+      </if>
+      <if test="regChannel != null">
+        #{regChannel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,11 +1,15 @@
 package com.xz.fld.service;
 
+import com.xz.fld.domain.Invit;
 import com.xz.fld.domain.User;
+import com.xz.fld.domain.UserDetail;
 import com.xz.fld.dto.ShareRegistDTO;
 import com.xz.fld.dto.UserDTO;
 import com.xz.fld.dto.UserRegister4PhoneDTO;
 import com.xz.fld.enums.ShareChannelEnum;
 import com.xz.fld.exception.BizException;
+import com.xz.fld.mapper.InvitMapper;
+import com.xz.fld.mapper.UserDetailMapper;
 import com.xz.fld.mapper.UserMapper;
 import com.xz.fld.util.IDUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -17,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -27,6 +30,12 @@ public class UserService {
 
     @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private InvitMapper invitMapper;
+
+    @Autowired
+    private UserDetailMapper userDetailMapper;
 
     @Value("${share.url.key}")
     private String shareKey;
@@ -182,6 +191,24 @@ public class UserService {
         if (1 != rows) {
             throw new BizException("注册失败");
         }
+
+        User invitUser = userMapper.selectByPrimaryKey(uid);
+        UserDetail userDetail = userDetailMapper.selectByPrimaryKey(uid);
+
+        //添加邀请记录
+        Invit invit = new Invit();
+        invit.setInvitMobile(invitUser.getPhone());
+        invit.setInvitName(userDetail == null ? "" : userDetail.getKittyname());
+        invit.setInvitUserId(user.getUserId());
+        invit.setRegChannel(channel);
+        invit.setUserId(uid);
+        invit.setRegtime(new Date());
+
+        rows = invitMapper.insert(invit);
+        if (1 != rows) {
+            throw new BizException("注册失败");
+        }
+
     }
 
 }
