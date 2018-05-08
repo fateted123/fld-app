@@ -46,6 +46,7 @@ public class AccessTokenHandler {
     public String decodeToken(String accessToken) {
         try {
             System.out.println("privateKey=" + privateKey);
+
             Algorithm algorithm = Algorithm.HMAC256(privateKey);
             JWTVerifier verifier = JWT.require(algorithm)
                     .build(); //Reusable verifier instance
