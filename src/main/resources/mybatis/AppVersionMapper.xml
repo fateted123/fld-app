@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.fld.mapper.AppVersionMapper">
+  <resultMap id="BaseResultMap" type="com.xz.fld.domain.AppVersion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app_version" jdbcType="VARCHAR" property="appVersion" />
+    <result column="platform" jdbcType="TINYINT" property="platform" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="force_update" jdbcType="TINYINT" property="forceUpdate" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="current_version" jdbcType="TINYINT" property="currentVersion" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, app_version, platform, description, force_update, url, current_version, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_appversion
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_appversion
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xz.fld.domain.AppVersion">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_appversion (app_version, platform, description, 
+      force_update, url, current_version, 
+      create_time)
+    values (#{appVersion,jdbcType=VARCHAR}, #{platform,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, 
+      #{forceUpdate,jdbcType=TINYINT}, #{url,jdbcType=VARCHAR}, #{currentVersion,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xz.fld.domain.AppVersion">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_appversion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appVersion != null">
+        app_version,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="forceUpdate != null">
+        force_update,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="currentVersion != null">
+        current_version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appVersion != null">
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=TINYINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUpdate != null">
+        #{forceUpdate,jdbcType=TINYINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="currentVersion != null">
+        #{currentVersion,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xz.fld.domain.AppVersion">
+    update tb_appversion
+    <set>
+      <if test="appVersion != null">
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=TINYINT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUpdate != null">
+        force_update = #{forceUpdate,jdbcType=TINYINT},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="currentVersion != null">
+        current_version = #{currentVersion,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xz.fld.domain.AppVersion">
+    update tb_appversion
+    set app_version = #{appVersion,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=TINYINT},
+      description = #{description,jdbcType=VARCHAR},
+      force_update = #{forceUpdate,jdbcType=TINYINT},
+      url = #{url,jdbcType=VARCHAR},
+      current_version = #{currentVersion,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCurrent" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM tb_appversion
+    WHERE current_version=1
+    AND platform=#{platform}
+    limit 1;
+  </select>
+</mapper>
