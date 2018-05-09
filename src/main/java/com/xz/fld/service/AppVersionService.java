@@ -15,9 +15,15 @@ public class AppVersionService {
 
     public AppVersionDTO loadVersion(String version, byte platform) {
 
-        AppVersion currentVersion = appVersionMapper.getCurrent(platform);
-
         AppVersionDTO appVersionDTO = new AppVersionDTO();
+
+        AppVersion currentVersion = appVersionMapper.getCurrent(platform);
+        if (null ==  currentVersion) {
+            appVersionDTO.setNeedUpdate(false);
+            appVersionDTO.setForceUpdate(false);
+            return appVersionDTO;
+        }
+
         appVersionDTO.setLastVersion(currentVersion.getAppVersion());
         appVersionDTO.setCreateTime(DateUtils.dateToString(currentVersion.getCreateTime()));
         appVersionDTO.setDescription(currentVersion.getDescription());
