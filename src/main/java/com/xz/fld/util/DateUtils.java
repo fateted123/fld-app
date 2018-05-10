@@ -14,6 +14,10 @@ public class DateUtils {
     public static final String patter_str_yyyymmddhhmmss = "yyyyMMddhhmmss";
 
     public static String dateToString(Date date) {
+        if (null == date) {
+            return null;
+        }
+
         return new SimpleDateFormat(patter_str).format(date);
     }
 

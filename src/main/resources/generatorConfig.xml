@@ -129,12 +129,10 @@
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true" />-->
         <!--</table>-->
 
-        <table tableName="tb_invit" domainObjectName="Invit" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="tb_product_order" domainObjectName="ProductOrder" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MySql" identity="true" />
         </table>
-
 
     </context>
 </generatorConfiguration>

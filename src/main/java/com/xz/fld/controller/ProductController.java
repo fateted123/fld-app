@@ -28,4 +28,10 @@ public class ProductController extends BaseController {
     public ResponseDTO listHomeSelected(HttpServletRequest request) {
         return ResponseDTO.success(productService.listSelectedProducts());
     }
+
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ApiOperation(value = "产品列表", notes = "根据产品特性获取所有可用的产品列表")
+    public ResponseDTO list() {
+        return ResponseDTO.success(productService.listEnableProducts());
+    }
 }

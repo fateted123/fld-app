@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.fld.mapper.ProductOrderMapper">
+  <resultMap id="BaseResultMap" type="com.xz.fld.domain.ProductOrder">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="apply_status" jdbcType="TINYINT" property="applyStatus" />
+    <result column="rebate_flag" jdbcType="TINYINT" property="rebateFlag" />
+    <result column="rebate_time" jdbcType="TIMESTAMP" property="rebateTime" />
+    <result column="rebate_amount" jdbcType="VARCHAR" property="rebateAmount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, user_id, product_id, apply_time, apply_status, rebate_flag, rebate_time, 
+    rebate_amount, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_product_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_product_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xz.fld.domain.ProductOrder">
+    insert into tb_product_order (order_id, user_id, product_id, 
+      apply_time, apply_status, rebate_flag, 
+      rebate_time, rebate_amount, create_time, 
+      modify_time)
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{applyStatus,jdbcType=TINYINT}, #{rebateFlag,jdbcType=TINYINT}, 
+      #{rebateTime,jdbcType=TIMESTAMP}, #{rebateAmount,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xz.fld.domain.ProductOrder">
+    insert into tb_product_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="applyStatus != null">
+        apply_status,
+      </if>
+      <if test="rebateFlag != null">
+        rebate_flag,
+      </if>
+      <if test="rebateTime != null">
+        rebate_time,
+      </if>
+      <if test="rebateAmount != null">
+        rebate_amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyStatus != null">
+        #{applyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="rebateFlag != null">
+        #{rebateFlag,jdbcType=TINYINT},
+      </if>
+      <if test="rebateTime != null">
+        #{rebateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rebateAmount != null">
+        #{rebateAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xz.fld.domain.ProductOrder">
+    update tb_product_order
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyStatus != null">
+        apply_status = #{applyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="rebateFlag != null">
+        rebate_flag = #{rebateFlag,jdbcType=TINYINT},
+      </if>
+      <if test="rebateTime != null">
+        rebate_time = #{rebateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rebateAmount != null">
+        rebate_amount = #{rebateAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xz.fld.domain.ProductOrder">
+    update tb_product_order
+    set user_id = #{userId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      apply_status = #{applyStatus,jdbcType=TINYINT},
+      rebate_flag = #{rebateFlag,jdbcType=TINYINT},
+      rebate_time = #{rebateTime,jdbcType=TIMESTAMP},
+      rebate_amount = #{rebateAmount,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="listOrders" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM tb_product_order
+    WHERE user_id=#{uid}
+    order by apply_time desc;
+  </select>
+</mapper>

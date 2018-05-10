@@ -41,9 +41,9 @@ public class Product {
 
     private Integer productRank;
 
-    private String productLable2;
-
     private String productLable1;
+
+    private String productLable2;
 
     private String productLable3;
 
@@ -64,6 +64,8 @@ public class Product {
     private Date createTime;
 
     private Date modifyTime;
+
+    private Byte productFeature;
 
     public Integer getProductId() {
         return productId;
@@ -217,20 +219,20 @@ public class Product {
         this.productRank = productRank;
     }
 
-    public String getProductLable2() {
-        return productLable2;
-    }
-
-    public void setProductLable2(String productLable2) {
-        this.productLable2 = productLable2 == null ? null : productLable2.trim();
-    }
-
     public String getProductLable1() {
         return productLable1;
     }
 
     public void setProductLable1(String productLable1) {
         this.productLable1 = productLable1 == null ? null : productLable1.trim();
+    }
+
+    public String getProductLable2() {
+        return productLable2;
+    }
+
+    public void setProductLable2(String productLable2) {
+        this.productLable2 = productLable2 == null ? null : productLable2.trim();
     }
 
     public String getProductLable3() {
@@ -311,5 +313,13 @@ public class Product {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Byte getProductFeature() {
+        return productFeature;
+    }
+
+    public void setProductFeature(Byte productFeature) {
+        this.productFeature = productFeature;
     }
 }

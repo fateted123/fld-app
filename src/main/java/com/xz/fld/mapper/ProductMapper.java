@@ -25,4 +25,7 @@ public interface ProductMapper {
     List<Product> listHotProduct();
 
     List<Product> listSelectedProduct();
+
+    List<Product> listEnableProduct(@Param("productFeature") Byte productFeature);
+
 }

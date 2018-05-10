@@ -21,8 +21,8 @@
     <result column="product_introduce" jdbcType="VARCHAR" property="productIntroduce" />
     <result column="product_url" jdbcType="VARCHAR" property="productUrl" />
     <result column="product_rank" jdbcType="INTEGER" property="productRank" />
-    <result column="product_lable2" jdbcType="VARCHAR" property="productLable2" />
     <result column="product_lable1" jdbcType="VARCHAR" property="productLable1" />
+    <result column="product_lable2" jdbcType="VARCHAR" property="productLable2" />
     <result column="product_lable3" jdbcType="VARCHAR" property="productLable3" />
     <result column="product_lable4" jdbcType="VARCHAR" property="productLable4" />
     <result column="product_lable5" jdbcType="VARCHAR" property="productLable5" />
@@ -33,14 +33,15 @@
     <result column="selected_product_flag" jdbcType="TINYINT" property="selectedProductFlag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="product_feature" jdbcType="TINYINT" property="productFeature" />
   </resultMap>
   <sql id="Base_Column_List">
     product_id, product_name, company_name, limit_up, limit_down, rate_up, rate_down, 
     product_type, product_logo, cooper_type, cooper_ratio, cpa_price, rebate_type, rebate_ratio, 
-    rebate_price, product_status, product_introduce, product_url, product_rank, product_lable2, 
-    product_lable1, product_lable3, product_lable4, product_lable5, product_deadline, 
+    rebate_price, product_status, product_introduce, product_url, product_rank, product_lable1, 
+    product_lable2, product_lable3, product_lable4, product_lable5, product_deadline, 
     apply_conditions, response_type, hot_product_flag, selected_product_flag, create_time, 
-    modify_time
+    modify_time, product_feature
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -59,22 +60,22 @@
       cooper_type, cooper_ratio, cpa_price, 
       rebate_type, rebate_ratio, rebate_price, 
       product_status, product_introduce, product_url, 
-      product_rank, product_lable2, product_lable1, 
+      product_rank, product_lable1, product_lable2, 
       product_lable3, product_lable4, product_lable5, 
       product_deadline, apply_conditions, response_type, 
       hot_product_flag, selected_product_flag, create_time, 
-      modify_time)
+      modify_time, product_feature)
     values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
       #{limitUp,jdbcType=INTEGER}, #{limitDown,jdbcType=INTEGER}, #{rateUp,jdbcType=VARCHAR}, 
       #{rateDown,jdbcType=VARCHAR}, #{productType,jdbcType=TINYINT}, #{productLogo,jdbcType=VARCHAR}, 
       #{cooperType,jdbcType=TINYINT}, #{cooperRatio,jdbcType=VARCHAR}, #{cpaPrice,jdbcType=VARCHAR}, 
       #{rebateType,jdbcType=TINYINT}, #{rebateRatio,jdbcType=VARCHAR}, #{rebatePrice,jdbcType=VARCHAR}, 
       #{productStatus,jdbcType=TINYINT}, #{productIntroduce,jdbcType=VARCHAR}, #{productUrl,jdbcType=VARCHAR}, 
-      #{productRank,jdbcType=INTEGER}, #{productLable2,jdbcType=VARCHAR}, #{productLable1,jdbcType=VARCHAR}, 
+      #{productRank,jdbcType=INTEGER}, #{productLable1,jdbcType=VARCHAR}, #{productLable2,jdbcType=VARCHAR}, 
       #{productLable3,jdbcType=VARCHAR}, #{productLable4,jdbcType=VARCHAR}, #{productLable5,jdbcType=VARCHAR}, 
       #{productDeadline,jdbcType=TIMESTAMP}, #{applyConditions,jdbcType=VARCHAR}, #{responseType,jdbcType=TINYINT}, 
       #{hotProductFlag,jdbcType=TINYINT}, #{selectedProductFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+      #{modifyTime,jdbcType=TIMESTAMP}, #{productFeature,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.xz.fld.domain.Product">
     insert into tb_product
@@ -136,11 +137,11 @@
       <if test="productRank != null">
         product_rank,
       </if>
-      <if test="productLable2 != null">
-        product_lable2,
-      </if>
       <if test="productLable1 != null">
         product_lable1,
+      </if>
+      <if test="productLable2 != null">
+        product_lable2,
       </if>
       <if test="productLable3 != null">
         product_lable3,
@@ -171,6 +172,9 @@
       </if>
       <if test="modifyTime != null">
         modify_time,
+      </if>
+      <if test="productFeature != null">
+        product_feature,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -231,11 +235,11 @@
       <if test="productRank != null">
         #{productRank,jdbcType=INTEGER},
       </if>
-      <if test="productLable2 != null">
-        #{productLable2,jdbcType=VARCHAR},
-      </if>
       <if test="productLable1 != null">
         #{productLable1,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable2 != null">
+        #{productLable2,jdbcType=VARCHAR},
       </if>
       <if test="productLable3 != null">
         #{productLable3,jdbcType=VARCHAR},
@@ -266,6 +270,9 @@
       </if>
       <if test="modifyTime != null">
         #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productFeature != null">
+        #{productFeature,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -326,11 +333,11 @@
       <if test="productRank != null">
         product_rank = #{productRank,jdbcType=INTEGER},
       </if>
-      <if test="productLable2 != null">
-        product_lable2 = #{productLable2,jdbcType=VARCHAR},
-      </if>
       <if test="productLable1 != null">
         product_lable1 = #{productLable1,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable2 != null">
+        product_lable2 = #{productLable2,jdbcType=VARCHAR},
       </if>
       <if test="productLable3 != null">
         product_lable3 = #{productLable3,jdbcType=VARCHAR},
@@ -362,6 +369,9 @@
       <if test="modifyTime != null">
         modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="productFeature != null">
+        product_feature = #{productFeature,jdbcType=TINYINT},
+      </if>
     </set>
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
@@ -385,8 +395,8 @@
       product_introduce = #{productIntroduce,jdbcType=VARCHAR},
       product_url = #{productUrl,jdbcType=VARCHAR},
       product_rank = #{productRank,jdbcType=INTEGER},
-      product_lable2 = #{productLable2,jdbcType=VARCHAR},
       product_lable1 = #{productLable1,jdbcType=VARCHAR},
+      product_lable2 = #{productLable2,jdbcType=VARCHAR},
       product_lable3 = #{productLable3,jdbcType=VARCHAR},
       product_lable4 = #{productLable4,jdbcType=VARCHAR},
       product_lable5 = #{productLable5,jdbcType=VARCHAR},
@@ -396,12 +406,13 @@
       hot_product_flag = #{hotProductFlag,jdbcType=TINYINT},
       selected_product_flag = #{selectedProductFlag,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      product_feature = #{productFeature,jdbcType=TINYINT}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
 
   <select id="listProduct" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"></include>
+    SELECT <include refid="Base_Column_List" />
     FROM tb_product
     <trim prefix="WHERE" prefixOverrides="AND|OR ">
       <if test="status != null">
@@ -413,7 +424,7 @@
   </select>
 
   <select id="listHotProduct" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"></include>
+    SELECT <include refid="Base_Column_List" />
     FROM tb_product
     WHERE hot_product_flag=1
     AND
@@ -422,11 +433,21 @@
   </select>
 
   <select id="listSelectedProduct" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"></include>
+    SELECT <include refid="Base_Column_List" />
     FROM tb_product
     WHERE selected_product_flag=1
     AND
     product_status = 1
+    order by product_rank, modify_time desc
+  </select>
+
+  <select id="listEnableProduct" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM tb_product
+    WHERE
+    product_status = 1
+    AND
+    product_feature=#{productFeature}
     order by product_rank, modify_time desc
   </select>
 </mapper>
