@@ -240,4 +240,8 @@
     FROM tb_user
     WHERE phone=#{phone}
   </select>
+
+  <update id="updatePwd">
+    UPDATE tb_user SET pwd=#{pwd} where user_id=#{uid};
+  </update>
 </mapper>

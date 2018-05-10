@@ -213,7 +213,25 @@ public class UserService {
         if (1 != rows) {
             throw new BizException("注册失败");
         }
+    }
 
+    public void resetPwd(String uid, String code, String newPwd) {
+        //校验短信码
+        User user = userMapper.selectByPrimaryKey(uid);
+        String resetCode = cacheService.getRegistCode(user.getPhone());
+        if (StringUtils.isBlank(resetCode)) {
+            throw new BizException("验证码过期");
+        }
+
+        if (!resetCode.equalsIgnoreCase(code)) {
+            throw new BizException("验证码不正确");
+        }
+
+        String encodePwd = DigestUtils.md5Hex(user.getPhone() + newPwd + pwdKey);
+        int rows = userMapper.updatePwd(uid, encodePwd);
+        if (1 != rows) {
+            throw new BizException("密码设置失败");
+        }
     }
 
 }

@@ -213,10 +213,26 @@ public class UserController extends BaseController {
         }
 
         String uid = accessTokenHandler.decodeToken(accessToken);
-
         return ResponseDTO.success(userService.getUserShareUrl(uid));
-
     }
 
+    @RequestMapping(value = "/resetPwd", method = RequestMethod.POST)
+    @ApiOperation(value = "重置密码", notes = "重置密码，成功后，客户端需要将token清除，重新登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "短信验证码", required = true,  paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "newPwd", value = "新密码", required = true,  paramType = "query", dataType = "String"),
+    })
+    @ResponseBody
+    public ResponseDTO resetPwd(String code, String newPwd, @RequestHeader("access-token") String accessToken) {
+
+        if (null == accessToken || "".equals(accessToken)) {
+            return ResponseDTO.failed("请登录");
+        }
+
+        String uid = accessTokenHandler.decodeToken(accessToken);
+
+        userService.resetPwd(uid, code, newPwd);
+        return ResponseDTO.success();
+    }
 
 }
