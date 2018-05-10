@@ -187,7 +187,8 @@ public class UserService {
         user.setInvitUserId(uid);
         user.setOpenTime(new Date());
         user.setPhone(phone);
-        user.setPwd(pwd);
+        String encodePwd = DigestUtils.md5Hex(phone + pwd + pwdKey);
+        user.setPwd(encodePwd);
         user.setRegisterChannel(channel);
         user.setState((byte)1);
         user.setUpdateTime(new Date());
