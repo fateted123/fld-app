@@ -43,6 +43,9 @@ public class UserService {
     @Value("${share.regist.url}")
     private String shareRegistUrl;
 
+    @Value("${regist.pwd.key}")
+    private String pwdKey;
+
     public void register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO) {
 
         String code = cacheService.getRegistCode(userRegister4PhoneDTO.getPhone());
@@ -65,7 +68,8 @@ public class UserService {
         user.setInvitUserId(userRegister4PhoneDTO.getInvitUserId());
         user.setOpenTime(new Date());
         user.setPhone(userRegister4PhoneDTO.getPhone());
-        user.setPwd(userRegister4PhoneDTO.getPwd());
+        String encodePwd = DigestUtils.md5Hex(userRegister4PhoneDTO.getPhone() + userRegister4PhoneDTO.getPwd() + pwdKey);
+        user.setPwd(encodePwd);
         user.setRegisterChannel(userRegister4PhoneDTO.getRegisterChannel());
         user.setState((byte)1);
         user.setTerminalInfo(userRegister4PhoneDTO.getTerminalInfo());
@@ -86,7 +90,8 @@ public class UserService {
             throw new BizException("用户不存在或者密码错误");
         }
 
-        if (!user.getPwd().equals(pwd)) {
+        String encodePwd = DigestUtils.md5Hex(phone + pwd + pwdKey);
+        if (!user.getPwd().equals(encodePwd)) {
             throw new BizException("用户不存在或者密码错误");
         }
 

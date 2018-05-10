@@ -17,7 +17,7 @@ public class CacheConfig {
     public static final int DEFAULT_TTL = 60;
 
     public enum Caches {
-        registerCode(10),
+        registerCode(60),
         oneDaySendCodeCounter(86400),
         oneDayIPSendCOdeCounter(86400);
 

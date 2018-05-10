@@ -108,8 +108,6 @@ public class UserController extends BaseController {
             }
             log.info(result);
 
-
-
             cacheService.putCodeCounter(phone, count);
             cacheService.putIPCodeCounter(ip, ipCount);
             cacheService.putRegistCode(code, phone);
