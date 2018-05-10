@@ -3,6 +3,7 @@ package com.xz.fld.service;
 import com.xz.fld.domain.Invit;
 import com.xz.fld.domain.User;
 import com.xz.fld.domain.UserDetail;
+import com.xz.fld.dto.InvitDTO;
 import com.xz.fld.dto.ShareRegistDTO;
 import com.xz.fld.dto.UserDTO;
 import com.xz.fld.dto.UserRegister4PhoneDTO;
@@ -11,6 +12,7 @@ import com.xz.fld.exception.BizException;
 import com.xz.fld.mapper.InvitMapper;
 import com.xz.fld.mapper.UserDetailMapper;
 import com.xz.fld.mapper.UserMapper;
+import com.xz.fld.util.DateUtils;
 import com.xz.fld.util.IDUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -218,6 +220,9 @@ public class UserService {
     public void resetPwd(String uid, String code, String newPwd) {
         //校验短信码
         User user = userMapper.selectByPrimaryKey(uid);
+        if (null == user) {
+            throw new BizException("用户不存在");
+        }
         String resetCode = cacheService.getRegistCode(user.getPhone());
         if (StringUtils.isBlank(resetCode)) {
             throw new BizException("验证码过期");
@@ -232,6 +237,26 @@ public class UserService {
         if (1 != rows) {
             throw new BizException("密码设置失败");
         }
+    }
+
+    public List<InvitDTO> loadInvit(String uid) {
+        List<Invit> invits = invitMapper.listInvit(uid);
+        List<InvitDTO> dtoList = new ArrayList<>(invits.size());
+
+        for (Invit invit : invits) {
+            InvitDTO invitDTO = new InvitDTO();
+            dtoList.add(invitDTO);
+
+            invitDTO.setId(invit.getId());
+            invitDTO.setInvitMobile(invit.getInvitMobile());
+            invitDTO.setInvitName(invit.getInvitName());
+            invitDTO.setInvitUserId(invit.getInvitUserId());
+            invitDTO.setRegChannel(ShareChannelEnum.getShareChannelEnum(invit.getRegChannel()).getV());
+            invitDTO.setRegtime(DateUtils.dateToString(invit.getRegtime()));
+            invitDTO.setUserId(invit.getUserId());
+        }
+
+        return dtoList;
     }
 
 }

@@ -14,7 +14,7 @@ public enum ShareChannelEnum {
         this.v = v;
     }
 
-    public static ShareChannelEnum getBannerEnum(byte k) {
+    public static ShareChannelEnum getShareChannelEnum(byte k) {
         for (ShareChannelEnum bannerTypeEnumEnum : values()) {
             if (bannerTypeEnumEnum.getK() == k) {
                 return bannerTypeEnumEnum;

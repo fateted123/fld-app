@@ -3,6 +3,8 @@ package com.xz.fld.domain;
 import java.util.Date;
 
 public class Invit {
+    private Integer id;
+
     private String invitUserId;
 
     private String userId;
@@ -14,6 +16,14 @@ public class Invit {
     private Date regtime;
 
     private Byte regChannel;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getInvitUserId() {
         return invitUserId;

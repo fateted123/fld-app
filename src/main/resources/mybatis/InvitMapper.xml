@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xz.fld.mapper.InvitMapper">
   <resultMap id="BaseResultMap" type="com.xz.fld.domain.Invit">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="invit_user_id" jdbcType="VARCHAR" property="invitUserId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="invit_name" jdbcType="VARCHAR" property="invitName" />
@@ -9,7 +10,23 @@
     <result column="regtime" jdbcType="DATE" property="regtime" />
     <result column="reg_channel" jdbcType="TINYINT" property="regChannel" />
   </resultMap>
+  <sql id="Base_Column_List">
+    id, invit_user_id, user_id, invit_name, invit_mobile, regtime, reg_channel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_invit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_invit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.xz.fld.domain.Invit">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_invit (invit_user_id, user_id, invit_name, 
       invit_mobile, regtime, reg_channel
       )
@@ -18,6 +35,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xz.fld.domain.Invit">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_invit
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="invitUserId != null">
@@ -60,4 +80,44 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xz.fld.domain.Invit">
+    update tb_invit
+    <set>
+      <if test="invitUserId != null">
+        invit_user_id = #{invitUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="invitName != null">
+        invit_name = #{invitName,jdbcType=VARCHAR},
+      </if>
+      <if test="invitMobile != null">
+        invit_mobile = #{invitMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=DATE},
+      </if>
+      <if test="regChannel != null">
+        reg_channel = #{regChannel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xz.fld.domain.Invit">
+    update tb_invit
+    set invit_user_id = #{invitUserId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      invit_name = #{invitName,jdbcType=VARCHAR},
+      invit_mobile = #{invitMobile,jdbcType=VARCHAR},
+      regtime = #{regtime,jdbcType=DATE},
+      reg_channel = #{regChannel,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listInvit" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM tb_invit
+    WHERE user_id=#{uid}
+  </select>
 </mapper>

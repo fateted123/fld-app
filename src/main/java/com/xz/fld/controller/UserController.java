@@ -235,4 +235,17 @@ public class UserController extends BaseController {
         return ResponseDTO.success();
     }
 
+    @RequestMapping(value = "/listInvitInfo", method = RequestMethod.POST)
+    @ApiOperation(value = "我的邀请信息", notes = "获取我的所有邀请信息")
+    @ResponseBody
+    public ResponseDTO listInvitInfo(@RequestHeader("access-token") String accessToken) {
+
+        if (null == accessToken || "".equals(accessToken)) {
+            return ResponseDTO.failed("请登录");
+        }
+
+        String uid = accessTokenHandler.decodeToken(accessToken);
+        return ResponseDTO.success(userService.loadInvit(uid));
+    }
+
 }
