@@ -1,6 +1,7 @@
 package com.xz.fld.controller;
 
 import com.xz.fld.common.MessageFormat;
+import com.xz.fld.common.ThreadLocalHolder;
 import com.xz.fld.domain.User;
 import com.xz.fld.dto.ResponseDTO;
 import com.xz.fld.dto.UserDTO;
@@ -164,26 +165,14 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户信息", notes = "获取用户详细信息")
     public ResponseDTO getUserInfo(@RequestHeader("access-token") String accessToken) {
 
-        if (null == accessToken || "".equals(accessToken)) {
-            return ResponseDTO.failed("请先登录");
-        }
-
-        log.info(">>>>>>>>>>>{}", accessToken);
-
-        String uid = accessTokenHandler.decodeToken(accessToken);
-
-        return ResponseDTO.success(userService.getUserInfo(uid));
+        return ResponseDTO.success(userService.getUserInfo(ThreadLocalHolder.getUid()));
     }
 
     @RequestMapping(value = "/getInviteQRcode", method = RequestMethod.POST)
     @ApiOperation(value = "用户邀请二维码", notes = "获取用户邀请二维码图片")
     public void getInviteQRcode(@RequestHeader("access-token") String accessToken, HttpServletResponse response) {
 
-        if (null == accessToken || "".equals(accessToken)) {
-            return;
-        }
-
-        String uid = accessTokenHandler.decodeToken(accessToken);
+        String uid = ThreadLocalHolder.getUid();
         String filename = "invite_" + uid ;
         String context = "http://www.baidu.com";
 
@@ -208,11 +197,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户邀请地址", notes = "获取用户各大平台的专属邀请地址")
     public ResponseDTO getShareRegistUrl(@RequestHeader("access-token") String accessToken) {
 
-        if (null == accessToken || "".equals(accessToken)) {
-            return ResponseDTO.failed("请登录");
-        }
-
-        String uid = accessTokenHandler.decodeToken(accessToken);
+        String uid = ThreadLocalHolder.getUid();
         return ResponseDTO.success(userService.getUserShareUrl(uid));
     }
 
@@ -225,11 +210,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResponseDTO resetPwd(String code, String newPwd, @RequestHeader("access-token") String accessToken) {
 
-        if (null == accessToken || "".equals(accessToken)) {
-            return ResponseDTO.failed("请登录");
-        }
-
-        String uid = accessTokenHandler.decodeToken(accessToken);
+        String uid = ThreadLocalHolder.getUid();
 
         userService.resetPwd(uid, code, newPwd);
         return ResponseDTO.success();
@@ -240,11 +221,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResponseDTO listInvitInfo(@RequestHeader("access-token") String accessToken) {
 
-        if (null == accessToken || "".equals(accessToken)) {
-            return ResponseDTO.failed("请登录");
-        }
-
-        String uid = accessTokenHandler.decodeToken(accessToken);
+        String uid = ThreadLocalHolder.getUid();
         return ResponseDTO.success(userService.loadInvit(uid));
     }
 
