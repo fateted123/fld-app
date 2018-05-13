@@ -219,6 +219,11 @@ public class UserService {
     }
 
     public void resetPwd(String phone, String code, String newPwd) {
+
+        if (StringUtils.isBlank(phone) || StringUtils.isBlank(code) || StringUtils.isBlank(newPwd)) {
+            throw new BizException("请求参数有必填项为空");
+        }
+
         //校验短信码
         User user = userMapper.getUserByPhone(phone);
         if (null == user) {
