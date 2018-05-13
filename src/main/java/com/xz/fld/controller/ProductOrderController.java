@@ -38,8 +38,11 @@ public class ProductOrderController extends BaseController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @ApiOperation(value = "订单列表", notes = "获取个人订单列表")
-    public ResponseDTO list(@RequestHeader("access-token") String accessToken) {
+    @ApiOperation(value = "订单返利列表", notes = "获取个人返利信息列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "status", value = "返利状态 -1：全部  ", required = true,  paramType = "query", dataType = "String")
+    })
+    public ResponseDTO list(byte status, @RequestHeader("access-token") String accessToken) {
 
         String uid = ThreadLocalHolder.getUid();
 
