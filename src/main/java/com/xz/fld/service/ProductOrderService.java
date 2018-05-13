@@ -61,9 +61,9 @@ public class ProductOrderService {
 
     }
 
-    public List<OrderDTO> listOrders(String uid) {
+    public List<OrderDTO> listOrders(String uid, byte rebateFlag) {
 
-        List<ProductOrder> productOrders = productOrderMapper.listOrders(uid);
+        List<ProductOrder> productOrders = productOrderMapper.listOrders(uid, rebateFlag);
         List<OrderDTO> dtoList = new ArrayList<>(productOrders.size());
 
         for (ProductOrder order : productOrders) {

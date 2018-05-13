@@ -22,7 +22,7 @@ public class AccessTokenHandler {
         try {
 
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.SECOND, 30);
+            cal.add(Calendar.MONTH, 1);
 
             Algorithm algorithm = Algorithm.HMAC256(privateKey);
 

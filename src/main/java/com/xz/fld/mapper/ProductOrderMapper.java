@@ -1,6 +1,7 @@
 package com.xz.fld.mapper;
 
 import com.xz.fld.domain.ProductOrder;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface ProductOrderMapper {
 
     int updateByPrimaryKey(ProductOrder record);
 
-    List<ProductOrder> listOrders(String uid);
+    List<ProductOrder> listOrders(@Param("uid") String uid, @Param("rebateFlag") Byte rebateFlag);
 }

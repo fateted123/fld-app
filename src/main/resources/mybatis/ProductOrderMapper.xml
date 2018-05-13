@@ -155,6 +155,9 @@
     SELECT <include refid="Base_Column_List"></include>
     FROM tb_product_order
     WHERE user_id=#{uid}
+    <if test="rebateFlag != -1">
+      and rebate_flag=#{rebateFlag}
+    </if>
     order by apply_time desc;
   </select>
 </mapper>
