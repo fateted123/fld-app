@@ -218,9 +218,9 @@ public class UserService {
         }
     }
 
-    public void resetPwd(String uid, String code, String newPwd) {
+    public void resetPwd(String phone, String code, String newPwd) {
         //校验短信码
-        User user = userMapper.selectByPrimaryKey(uid);
+        User user = userMapper.getUserByPhone(phone);
         if (null == user) {
             throw new BizException("用户不存在");
         }
@@ -234,7 +234,7 @@ public class UserService {
         }
 
         String encodePwd = DigestUtils.md5Hex(user.getPhone() + newPwd + pwdKey);
-        int rows = userMapper.updatePwd(uid, encodePwd);
+        int rows = userMapper.updatePwd(user.getUserId(), encodePwd);
         if (1 != rows) {
             throw new BizException("密码设置失败");
         }

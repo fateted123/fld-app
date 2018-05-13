@@ -209,13 +209,11 @@ public class UserController extends BaseController {
             @ApiImplicitParam(name = "newPwd", value = "新密码", required = true,  paramType = "query", dataType = "String"),
     })
     @ResponseBody
-    public ResponseDTO resetPwd(String code, String newPwd, @RequestHeader("access-token") String accessToken) {
+    public ResponseDTO resetPwd(String phone, String code, String newPwd) {
 
         log.info("新密码{}", newPwd);
 
-        String uid = ThreadLocalHolder.getUid();
-
-        userService.resetPwd(uid, code, newPwd);
+        userService.resetPwd(phone, code, newPwd);
         return ResponseDTO.success();
     }
 
