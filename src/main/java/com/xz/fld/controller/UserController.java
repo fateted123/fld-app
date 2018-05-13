@@ -151,6 +151,7 @@ public class UserController extends BaseController {
     })
     public ResponseDTO login4Password(String phone, String password, HttpServletResponse response) {
 
+        log.info("登录用户{},密码{}", phone, password);
         User user = userService.login4Pwd(phone, password);
 
         String token = accessTokenHandler.createToken(user.getUserId());
@@ -209,6 +210,8 @@ public class UserController extends BaseController {
     })
     @ResponseBody
     public ResponseDTO resetPwd(String code, String newPwd, @RequestHeader("access-token") String accessToken) {
+
+        log.info("新密码{}", newPwd);
 
         String uid = ThreadLocalHolder.getUid();
 
