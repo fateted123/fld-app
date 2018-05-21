@@ -1,14 +1,13 @@
 package com.xz.fld.service;
 
+import com.xz.fld.domain.AccountBalance;
 import com.xz.fld.domain.Invit;
 import com.xz.fld.domain.User;
 import com.xz.fld.domain.UserDetail;
-import com.xz.fld.dto.InvitDTO;
-import com.xz.fld.dto.ShareRegistDTO;
-import com.xz.fld.dto.UserDTO;
-import com.xz.fld.dto.UserRegister4PhoneDTO;
+import com.xz.fld.dto.*;
 import com.xz.fld.enums.ShareChannelEnum;
 import com.xz.fld.exception.BizException;
+import com.xz.fld.mapper.AccountBalanceMapper;
 import com.xz.fld.mapper.InvitMapper;
 import com.xz.fld.mapper.UserDetailMapper;
 import com.xz.fld.mapper.UserMapper;
@@ -19,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +39,9 @@ public class UserService {
     @Autowired
     private UserDetailMapper userDetailMapper;
 
+    @Autowired
+    private AccountBalanceMapper accountBalanceMapper;
+
     @Value("${share.url.key}")
     private String shareKey;
 
@@ -48,6 +51,7 @@ public class UserService {
     @Value("${regist.pwd.key}")
     private String pwdKey;
 
+    @Transactional(rollbackFor = Exception.class)
     public void register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO) {
 
         String code = cacheService.getRegistCode(userRegister4PhoneDTO.getPhone());
@@ -83,6 +87,34 @@ public class UserService {
         if (1 != rows) {
             throw new BizException("注册失败");
         }
+
+        AccountBalance accountBalance = new AccountBalance();
+        accountBalance.setArgueAmount("");
+        accountBalance.setEnableBalance("");
+        accountBalance.setEnableCash("");
+        accountBalance.setPutOutRebateCount(0);
+        accountBalance.setPutOutRewardAmount("");
+        accountBalance.setPutOutRewardCount(0);
+        accountBalance.setRebateAmount("");
+        accountBalance.setRebateCount(0);
+        accountBalance.setRewardAmount("");
+        accountBalance.setRewardCount(0);
+        accountBalance.setTotalAmount("");
+        accountBalance.setUnableBalance("");
+        accountBalance.setUnableCash("");
+        accountBalance.setUnPutOutRebateCount(0);
+        accountBalance.setUnPutOutRewardAmount("");
+        accountBalance.setUnPutOutRewardCount(0);
+        accountBalance.setUnRebateAmount("");
+        accountBalance.setUserId(user.getUserId());
+        accountBalance.setCreateTime(new Date());
+        accountBalance.setUpdateTime(new Date());
+
+        rows = accountBalanceMapper.insert(accountBalance);
+        if (1 != rows) {
+            throw new BizException("注册失败");
+        }
+
     }
 
     public User login4Pwd(String phone, String pwd) {
@@ -263,6 +295,36 @@ public class UserService {
         }
 
         return dtoList;
+    }
+
+    public AccountBalanceDTO getAccountInfo(String userId) {
+        System.out.println(userId);
+        AccountBalance accountBalance = accountBalanceMapper.selectByPrimaryKey(userId);
+        if (null == accountBalance) {
+            throw new BizException("用户不存在");
+        }
+
+        AccountBalanceDTO dto = new AccountBalanceDTO();
+        dto.setArgueAmount(accountBalance.getArgueAmount());
+        dto.setEnableBalance(accountBalance.getEnableBalance());
+        dto.setEnableCash(accountBalance.getEnableCash());
+        dto.setPutOutRebateCount(accountBalance.getPutOutRebateCount());
+        dto.setPutOutRewardAmount(accountBalance.getPutOutRewardAmount());
+        dto.setPutOutRewardCount(accountBalance.getPutOutRewardCount());
+        dto.setRebateAmount(accountBalance.getRebateAmount());
+        dto.setRebateCount(accountBalance.getRebateCount());
+        dto.setRewardAmount(accountBalance.getRewardAmount());
+        dto.setRewardCount(accountBalance.getRewardCount());
+        dto.setTotalAmount(accountBalance.getTotalAmount());
+        dto.setUnableBalance(accountBalance.getUnableBalance());
+        dto.setUnableCash(accountBalance.getUnableCash());
+        dto.setUnPutOutRebateCount(accountBalance.getUnPutOutRebateCount());
+        dto.setUnPutOutRewardAmount(accountBalance.getUnPutOutRewardAmount());
+        dto.setUnPutOutRewardCount(accountBalance.getUnPutOutRewardCount());
+        dto.setUnRebateAmount(accountBalance.getUnRebateAmount());
+        dto.setUserId(userId);
+
+        return dto;
     }
 
 }

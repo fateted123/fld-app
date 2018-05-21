@@ -227,4 +227,13 @@ public class UserController extends BaseController {
         return ResponseDTO.success(userService.loadInvit(uid));
     }
 
+    @RequestMapping(value = "/getAccountInfo", method = RequestMethod.POST)
+    @ApiOperation(value = "我的账户信息", notes = "获取我的账户信息")
+    @ResponseBody
+    public ResponseDTO getAccountInfo(@RequestHeader("access-token") String accessToken) {
+
+        String uid = ThreadLocalHolder.getUid();
+        return ResponseDTO.success(userService.getAccountInfo(uid));
+    }
+
 }
