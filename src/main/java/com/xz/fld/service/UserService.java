@@ -194,6 +194,7 @@ public class UserService {
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void register4Share(String phone, String pwd, String code, String uid, byte channel, String token) {
 
         checkShareRegist(uid, channel, token);
@@ -243,6 +244,33 @@ public class UserService {
         invit.setRegtime(new Date());
 
         rows = invitMapper.insert(invit);
+        if (1 != rows) {
+            throw new BizException("注册失败");
+        }
+
+        AccountBalance accountBalance = new AccountBalance();
+        accountBalance.setArgueAmount("");
+        accountBalance.setEnableBalance("");
+        accountBalance.setEnableCash("");
+        accountBalance.setPutOutRebateCount(0);
+        accountBalance.setPutOutRewardAmount("");
+        accountBalance.setPutOutRewardCount(0);
+        accountBalance.setRebateAmount("");
+        accountBalance.setRebateCount(0);
+        accountBalance.setRewardAmount("");
+        accountBalance.setRewardCount(0);
+        accountBalance.setTotalAmount("");
+        accountBalance.setUnableBalance("");
+        accountBalance.setUnableCash("");
+        accountBalance.setUnPutOutRebateCount(0);
+        accountBalance.setUnPutOutRewardAmount("");
+        accountBalance.setUnPutOutRewardCount(0);
+        accountBalance.setUnRebateAmount("");
+        accountBalance.setUserId(user.getUserId());
+        accountBalance.setCreateTime(new Date());
+        accountBalance.setUpdateTime(new Date());
+
+        rows = accountBalanceMapper.insert(accountBalance);
         if (1 != rows) {
             throw new BizException("注册失败");
         }
