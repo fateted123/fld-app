@@ -24,6 +24,12 @@ public class IDUtils {
         return DateUtils.dateToString(new Date(), DateUtils.patter_str_yyyymmddhhmmss) + (random.nextInt(100000) + 100000);
     }
 
+    public static String createWithdrawId() {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        return DateUtils.dateToString(new Date(), DateUtils.patter_str_yyyymmddhhmmss) + (random.nextInt(100000) + 100000);
+    }
+
+
     public static String createCode() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         String code = "";

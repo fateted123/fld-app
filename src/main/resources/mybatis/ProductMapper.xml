@@ -34,6 +34,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="product_feature" jdbcType="TINYINT" property="productFeature" />
+    <result column="stages_range" jdbcType="VARCHAR" property="stagesRange" />
   </resultMap>
   <sql id="Base_Column_List">
     product_id, product_name, company_name, limit_up, limit_down, rate_up, rate_down, 
@@ -41,7 +42,7 @@
     rebate_price, product_status, product_introduce, product_url, product_rank, product_lable1, 
     product_lable2, product_lable3, product_lable4, product_lable5, product_deadline, 
     apply_conditions, response_type, hot_product_flag, selected_product_flag, create_time, 
-    modify_time, product_feature
+    modify_time, product_feature, stages_range
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -64,7 +65,8 @@
       product_lable3, product_lable4, product_lable5, 
       product_deadline, apply_conditions, response_type, 
       hot_product_flag, selected_product_flag, create_time, 
-      modify_time, product_feature)
+      modify_time, product_feature, stages_range
+      )
     values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
       #{limitUp,jdbcType=INTEGER}, #{limitDown,jdbcType=INTEGER}, #{rateUp,jdbcType=VARCHAR}, 
       #{rateDown,jdbcType=VARCHAR}, #{productType,jdbcType=TINYINT}, #{productLogo,jdbcType=VARCHAR}, 
@@ -75,7 +77,8 @@
       #{productLable3,jdbcType=VARCHAR}, #{productLable4,jdbcType=VARCHAR}, #{productLable5,jdbcType=VARCHAR}, 
       #{productDeadline,jdbcType=TIMESTAMP}, #{applyConditions,jdbcType=VARCHAR}, #{responseType,jdbcType=TINYINT}, 
       #{hotProductFlag,jdbcType=TINYINT}, #{selectedProductFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{productFeature,jdbcType=TINYINT})
+      #{modifyTime,jdbcType=TIMESTAMP}, #{productFeature,jdbcType=TINYINT}, #{stagesRange,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xz.fld.domain.Product">
     insert into tb_product
@@ -176,6 +179,9 @@
       <if test="productFeature != null">
         product_feature,
       </if>
+      <if test="stagesRange != null">
+        stages_range,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="productId != null">
@@ -273,6 +279,9 @@
       </if>
       <if test="productFeature != null">
         #{productFeature,jdbcType=TINYINT},
+      </if>
+      <if test="stagesRange != null">
+        #{stagesRange,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -372,6 +381,9 @@
       <if test="productFeature != null">
         product_feature = #{productFeature,jdbcType=TINYINT},
       </if>
+      <if test="stagesRange != null">
+        stages_range = #{stagesRange,jdbcType=VARCHAR},
+      </if>
     </set>
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
@@ -407,7 +419,8 @@
       selected_product_flag = #{selectedProductFlag,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      product_feature = #{productFeature,jdbcType=TINYINT}
+      product_feature = #{productFeature,jdbcType=TINYINT},
+      stages_range = #{stagesRange,jdbcType=VARCHAR}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
 

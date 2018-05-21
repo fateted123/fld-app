@@ -67,6 +67,8 @@ public class Product {
 
     private Byte productFeature;
 
+    private String stagesRange;
+
     public Integer getProductId() {
         return productId;
     }
@@ -321,5 +323,13 @@ public class Product {
 
     public void setProductFeature(Byte productFeature) {
         this.productFeature = productFeature;
+    }
+
+    public String getStagesRange() {
+        return stagesRange;
+    }
+
+    public void setStagesRange(String stagesRange) {
+        this.stagesRange = stagesRange == null ? null : stagesRange.trim();
     }
 }

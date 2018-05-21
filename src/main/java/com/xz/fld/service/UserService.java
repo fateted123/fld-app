@@ -1,16 +1,11 @@
 package com.xz.fld.service;
 
-import com.xz.fld.domain.AccountBalance;
-import com.xz.fld.domain.Invit;
-import com.xz.fld.domain.User;
-import com.xz.fld.domain.UserDetail;
+import com.xz.fld.domain.*;
 import com.xz.fld.dto.*;
 import com.xz.fld.enums.ShareChannelEnum;
+import com.xz.fld.enums.WithdrawEnum;
 import com.xz.fld.exception.BizException;
-import com.xz.fld.mapper.AccountBalanceMapper;
-import com.xz.fld.mapper.InvitMapper;
-import com.xz.fld.mapper.UserDetailMapper;
-import com.xz.fld.mapper.UserMapper;
+import com.xz.fld.mapper.*;
 import com.xz.fld.util.DateUtils;
 import com.xz.fld.util.IDUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -41,6 +36,9 @@ public class UserService {
 
     @Autowired
     private AccountBalanceMapper accountBalanceMapper;
+
+    @Autowired
+    private WithdrawOrderMapper withdrawOrderMapper;
 
     @Value("${share.url.key}")
     private String shareKey;
@@ -325,6 +323,30 @@ public class UserService {
         dto.setUserId(userId);
 
         return dto;
+    }
+
+    public void withdraw(String uid, String wxAccount) {
+
+        System.out.println(">>>>>>uid=" + uid);
+        User user = userMapper.selectByPrimaryKey(uid);
+        if (null == user) {
+            throw new BizException("用户不存在");
+        }
+
+        WithdrawOrder withdrawOrder = new WithdrawOrder();
+        withdrawOrder.setAmount(null);
+        withdrawOrder.setCreateTime(new Date());
+        withdrawOrder.setModifyTime(new Date());
+        withdrawOrder.setId(IDUtils.createWithdrawId());
+        withdrawOrder.setPhone(user.getPhone());
+        withdrawOrder.setStatus(WithdrawEnum.待处理.getK());
+        withdrawOrder.setUserId(uid);
+        withdrawOrder.setWxAccount(wxAccount);
+
+        int rows = withdrawOrderMapper.insert(withdrawOrder);
+        if (1 != rows) {
+            throw new BizException("转账失败");
+        }
     }
 
 }

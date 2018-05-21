@@ -91,6 +91,7 @@ public class ProductService {
         dto.setSelectedProductDesc(SelectedProductEnum.getBannerEnum(product.getSelectedProductFlag()).getV());
         dto.setSelectedProductFlag(product.getSelectedProductFlag());
         dto.setProductFeature(product.getProductFeature());
+        dto.setStagesRange(product.getStagesRange());
     }
 
     public ProductEnableDTO listEnableProducts() {

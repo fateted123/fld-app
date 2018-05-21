@@ -82,4 +82,6 @@ public class ProductDTO {
 
     private String createTime;
 
+    private String stagesRange;
+
 }

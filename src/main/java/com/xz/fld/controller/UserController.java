@@ -236,4 +236,18 @@ public class UserController extends BaseController {
         return ResponseDTO.success(userService.getAccountInfo(uid));
     }
 
+    @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
+    @ApiOperation(value = "提现", notes = "账户提现")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "wxAccount", value = "微信账号", required = true,  paramType = "query", dataType = "String"),
+    })
+    @ResponseBody
+    public ResponseDTO withdraw(String wxAccount, @RequestHeader("access-token") String accessToken) {
+
+        String uid = ThreadLocalHolder.getUid();
+        userService.withdraw(uid, wxAccount);
+        return ResponseDTO.success();
+    }
+
+
 }
