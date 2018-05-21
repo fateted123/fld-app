@@ -34,4 +34,10 @@ public class ProductController extends BaseController {
     public ResponseDTO list() {
         return ResponseDTO.success(productService.listEnableProducts());
     }
+
+    @RequestMapping(value = "/listFeature", method = RequestMethod.POST)
+    @ApiOperation(value = "产品分类", notes = "根据产品特性")
+    public ResponseDTO listFeature() {
+        return ResponseDTO.success(productService.listFeature());
+    }
 }

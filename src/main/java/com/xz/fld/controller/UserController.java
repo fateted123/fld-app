@@ -193,7 +193,7 @@ public class UserController extends BaseController {
         }
 
     }
-
+    
     @RequestMapping(value = "/getShareRegistUrl", method = RequestMethod.POST)
     @ApiOperation(value = "用户邀请地址", notes = "获取用户各大平台的专属邀请地址")
     public ResponseDTO getShareRegistUrl(@RequestHeader("access-token") String accessToken) {

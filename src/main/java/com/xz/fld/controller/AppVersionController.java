@@ -2,6 +2,7 @@ package com.xz.fld.controller;
 
 import com.xz.fld.dto.ResponseDTO;
 import com.xz.fld.service.AppVersionService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +25,7 @@ public class AppVersionController extends BaseController {
             @ApiImplicitParam(name = "version", value = "手机号码", required = true,  paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "platform", value = "平台 1-Android 2-IOS", required = true,  paramType = "query", dataType = "String")
     })
+
     @ResponseBody
     public ResponseDTO getVersion(String version, byte platform) {
         return ResponseDTO.success(appVersionService.loadVersion(version, platform));

@@ -3,6 +3,7 @@ package com.xz.fld.service;
 import com.xz.fld.domain.Product;
 import com.xz.fld.dto.ProductDTO;
 import com.xz.fld.dto.ProductEnableDTO;
+import com.xz.fld.dto.ProductFeatureDTO;
 import com.xz.fld.enums.*;
 import com.xz.fld.mapper.ProductMapper;
 import com.xz.fld.util.DateUtils;
@@ -114,6 +115,23 @@ public class ProductService {
         dto.setFastLowerMoneyProducts(formatProduct(products));
 
         return dto;
+    }
+
+    public List<ProductFeatureDTO> listFeature() {
+
+        List<ProductFeatureDTO> dtos = new ArrayList<>();
+
+        ProductFeatureEnum[] values = ProductFeatureEnum.values();
+        for (ProductFeatureEnum en : values) {
+            ProductFeatureDTO dto = new ProductFeatureDTO();
+            dtos.add(dto);
+
+            dto.setFeatureName(en.getV());
+            dto.setProductFeature(en.getK());
+        }
+
+
+        return dtos;
     }
 
 }
