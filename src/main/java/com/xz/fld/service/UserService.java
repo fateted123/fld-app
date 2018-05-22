@@ -116,6 +116,22 @@ public class UserService {
             throw new BizException("注册失败");
         }
 
+        UserDetail userDetail = new UserDetail();
+        userDetail.setAppVersion(userRegister4PhoneDTO.getAppVersion());
+        userDetail.setChannelId(userRegister4PhoneDTO.getChannelId());
+        userDetail.setDeviceId(userRegister4PhoneDTO.getDeviceId());
+        userDetail.setDeviceModel(userRegister4PhoneDTO.getDeviceModel());
+        userDetail.setOsVersion(userRegister4PhoneDTO.getOsVersion());
+        userDetail.setPlatform(userRegister4PhoneDTO.getPlatform());
+        userDetail.setTimeStamp(userRegister4PhoneDTO.getPlatform());
+        userDetail.setUserId(user.getUserId());
+        userDetail.setPhone(user.getPhone());
+
+        rows = userDetailMapper.insert(userDetail);
+        if (1 != rows) {
+            throw new BizException("注册失败");
+        }
+
     }
 
     public User login4Pwd(String phone, String pwd) {
@@ -274,6 +290,15 @@ public class UserService {
         accountBalance.setUpdateTime(new Date());
 
         rows = accountBalanceMapper.insert(accountBalance);
+        if (1 != rows) {
+            throw new BizException("注册失败");
+        }
+
+        userDetail = new UserDetail();
+        userDetail.setUserId(user.getUserId());
+        userDetail.setPhone(user.getPhone());
+
+        rows = userDetailMapper.insert(userDetail);
         if (1 != rows) {
             throw new BizException("注册失败");
         }

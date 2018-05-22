@@ -16,10 +16,18 @@
     <result column="member_no" jdbcType="VARCHAR" property="memberNo" />
     <result column="member_class" jdbcType="VARCHAR" property="memberClass" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="app_version" jdbcType="VARCHAR" property="appVersion" />
+    <result column="channel_id" jdbcType="VARCHAR" property="channelId" />
+    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="device_model" jdbcType="VARCHAR" property="deviceModel" />
+    <result column="os_version" jdbcType="VARCHAR" property="osVersion" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
+    <result column="time_stamp" jdbcType="VARCHAR" property="timeStamp" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, age, name, kittyname, gender, username, identity_id, identity_type, my_invit_id, 
-    my_invit_num, head_picture, member_no, member_class, phone
+    my_invit_num, head_picture, member_no, member_class, phone, app_version, channel_id, 
+    device_id, device_model, os_version, platform, time_stamp
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -36,12 +44,18 @@
       kittyname, gender, username, 
       identity_id, identity_type, my_invit_id, 
       my_invit_num, head_picture, member_no, 
-      member_class, phone)
+      member_class, phone, app_version, 
+      channel_id, device_id, device_model, 
+      os_version, platform, time_stamp
+      )
     values (#{userId,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{kittyname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{identityId,jdbcType=VARCHAR}, #{identityType,jdbcType=TINYINT}, #{myInvitId,jdbcType=VARCHAR}, 
       #{myInvitNum,jdbcType=INTEGER}, #{headPicture,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, 
-      #{memberClass,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+      #{memberClass,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, 
+      #{channelId,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{deviceModel,jdbcType=VARCHAR}, 
+      #{osVersion,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, #{timeStamp,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xz.fld.domain.UserDetail">
     insert into tb_userdetail
@@ -88,6 +102,27 @@
       <if test="phone != null">
         phone,
       </if>
+      <if test="appVersion != null">
+        app_version,
+      </if>
+      <if test="channelId != null">
+        channel_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="deviceModel != null">
+        device_model,
+      </if>
+      <if test="osVersion != null">
+        os_version,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="timeStamp != null">
+        time_stamp,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -131,6 +166,27 @@
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null">
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="osVersion != null">
+        #{osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null">
+        #{timeStamp,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -176,6 +232,27 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="appVersion != null">
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        device_model = #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="osVersion != null">
+        os_version = #{osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null">
+        time_stamp = #{timeStamp,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
@@ -193,7 +270,14 @@
       head_picture = #{headPicture,jdbcType=VARCHAR},
       member_no = #{memberNo,jdbcType=VARCHAR},
       member_class = #{memberClass,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      device_model = #{deviceModel,jdbcType=VARCHAR},
+      os_version = #{osVersion,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      time_stamp = #{timeStamp,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>

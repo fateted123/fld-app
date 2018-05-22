@@ -136,7 +136,22 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/register4Phone", method = RequestMethod.POST)
     @ApiOperation(value = "注册", notes = "手机端用户注册")
-    public ResponseDTO register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO, HttpServletResponse response) {
+    public ResponseDTO register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO,
+                                      String _appVersion,
+                                      String _channelId,
+                                      String _deviceModel,
+                                      String _osVersion,
+                                      String _platform,
+                                      String _timeStamp,
+                                      HttpServletResponse response) {
+
+        userRegister4PhoneDTO.setAppVersion(_appVersion);
+        userRegister4PhoneDTO.setChannelId(_channelId);
+        userRegister4PhoneDTO.setOsVersion(_osVersion);
+        userRegister4PhoneDTO.setDeviceModel(_deviceModel);
+        userRegister4PhoneDTO.setPlatform(_platform);
+        userRegister4PhoneDTO.setTimeStamp(_timeStamp);
+
         userService.register4Phone(userRegister4PhoneDTO);
         return ResponseDTO.success();
     }

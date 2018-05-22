@@ -29,6 +29,20 @@ public class UserDetail {
 
     private String phone;
 
+    private String appVersion;
+
+    private String channelId;
+
+    private String deviceId;
+
+    private String deviceModel;
+
+    private String osVersion;
+
+    private String platform;
+
+    private String timeStamp;
+
     public String getUserId() {
         return userId;
     }
@@ -139,5 +153,61 @@ public class UserDetail {
 
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion == null ? null : appVersion.trim();
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId == null ? null : channelId.trim();
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId == null ? null : deviceId.trim();
+    }
+
+    public String getDeviceModel() {
+        return deviceModel;
+    }
+
+    public void setDeviceModel(String deviceModel) {
+        this.deviceModel = deviceModel == null ? null : deviceModel.trim();
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public void setOsVersion(String osVersion) {
+        this.osVersion = osVersion == null ? null : osVersion.trim();
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform == null ? null : platform.trim();
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp == null ? null : timeStamp.trim();
     }
 }
