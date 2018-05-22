@@ -40,6 +40,9 @@ public class UserService {
     @Autowired
     private WithdrawOrderMapper withdrawOrderMapper;
 
+    @Autowired
+    private UserfeedbackMapper userfeedbackMapper;
+
     @Value("${share.url.key}")
     private String shareKey;
 
@@ -374,6 +377,26 @@ public class UserService {
         int rows = withdrawOrderMapper.insert(withdrawOrder);
         if (1 != rows) {
             throw new BizException("转账失败");
+        }
+    }
+
+    public void addUserFeed(String msg, String phone, String userId) {
+        if(StringUtils.isBlank(msg)) {
+            throw new BizException("反馈内容不能为空");
+        }
+
+        Userfeedback userfeedback = new Userfeedback();
+        userfeedback.setCreateTime(new Date());
+        userfeedback.setFeedbackStatus("0");
+        userfeedback.setFeedbackText(msg);
+        userfeedback.setFeedbackTime(new Date());
+        userfeedback.setPhoneNum(phone);
+        userfeedback.setUpdateTime(new Date());
+        userfeedback.setUserId(userId);
+
+        int rows = userfeedbackMapper.insert(userfeedback);
+        if (1 != rows) {
+            throw new BizException("反馈失败");
         }
     }
 

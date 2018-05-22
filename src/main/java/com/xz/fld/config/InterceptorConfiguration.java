@@ -21,6 +21,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
         ir.addPathPatterns("/user/getInviteQRcode*");
         ir.addPathPatterns("/user/getAccountInfo*");
         ir.addPathPatterns("/user/withdraw*");
+        ir.addPathPatterns("/user/feed*");
         ir.addPathPatterns("/user/getShareRegistUrl*");
         ir.addPathPatterns("/user/listInvitInfo*");
         ir.addPathPatterns("/order/create*");

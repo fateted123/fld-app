@@ -13,6 +13,7 @@ import com.xz.fld.util.DateUtils;
 import com.xz.fld.util.IDUtils;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class ProductOrderService {
 
     @Autowired
     private ProductOrderMapper productOrderMapper;
+
+    @Value("${fld.image.url}")
+    private String productImageUrl;
 
     public void createOrder(String uid, int productId) {
 
@@ -70,6 +74,8 @@ public class ProductOrderService {
             OrderDTO orderDTO = new OrderDTO();
             dtoList.add(orderDTO);
 
+            Product product = productMapper.selectByPrimaryKey(order.getProductId());
+
             orderDTO.setApplyStatus(order.getApplyStatus());
             orderDTO.setApplyStatusDesc(OrderStatusEnum.getEnum(order.getApplyStatus()).getV());
             orderDTO.setApplyTime(DateUtils.dateToString(order.getApplyTime()));
@@ -81,6 +87,8 @@ public class ProductOrderService {
             orderDTO.setRebateFlagDesc(RebateFlagEnum.getEnum(order.getRebateFlag()).getV());
             orderDTO.setRebateTime(order.getRebateTime() == null ? "" : DateUtils.dateToString(order.getRebateTime()));
             orderDTO.setUserId(uid);
+            orderDTO.setProductName(product.getProductName());
+            orderDTO.setProductImage(productImageUrl + product.getProductLogo());
         }
 
         return dtoList;

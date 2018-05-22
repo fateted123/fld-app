@@ -249,5 +249,18 @@ public class UserController extends BaseController {
         return ResponseDTO.success();
     }
 
+    @RequestMapping(value = "/feed", method = RequestMethod.POST)
+    @ApiOperation(value = "用户反馈", notes = "用户反馈意见")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "msg", value = "反馈内容", required = true,  paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "phone", value = "手机号码", required = true,  paramType = "query", dataType = "String")
+    })
+    @ResponseBody
+    public ResponseDTO feed(String msg, String phone, @RequestHeader("access-token") String accessToken) {
+
+        String uid = ThreadLocalHolder.getUid();
+        userService.addUserFeed(msg, phone, uid);
+        return ResponseDTO.success();
+    }
 
 }
