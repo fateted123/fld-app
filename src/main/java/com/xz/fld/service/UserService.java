@@ -53,7 +53,7 @@ public class UserService {
     private String pwdKey;
 
     @Transactional(rollbackFor = Exception.class)
-    public void register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO) {
+    public User register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO) {
 
         String code = cacheService.getRegistCode(userRegister4PhoneDTO.getPhone());
         if (StringUtils.isBlank(code)) {
@@ -131,6 +131,8 @@ public class UserService {
         if (1 != rows) {
             throw new BizException("注册失败");
         }
+
+        return user;
 
     }
 

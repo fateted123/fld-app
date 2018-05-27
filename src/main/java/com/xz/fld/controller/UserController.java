@@ -135,7 +135,7 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(value = "/register4Phone", method = RequestMethod.POST)
-    @ApiOperation(value = "注册", notes = "手机端用户注册")
+    @ApiOperation(value = "注册", notes = "手机端用户注册,成功后响应头返回token")
     public ResponseDTO register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO,
                                       String _appVersion,
                                       String _channelId,
@@ -152,7 +152,13 @@ public class UserController extends BaseController {
         userRegister4PhoneDTO.setPlatform(_platform);
         userRegister4PhoneDTO.setTimeStamp(_timeStamp);
 
-        userService.register4Phone(userRegister4PhoneDTO);
+        User user = userService.register4Phone(userRegister4PhoneDTO);
+
+        String token = accessTokenHandler.createToken(user.getUserId());
+        log.info(token);
+
+        response.setHeader("access-token", token);
+
         return ResponseDTO.success();
     }
 
