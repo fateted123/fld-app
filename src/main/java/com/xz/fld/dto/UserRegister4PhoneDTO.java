@@ -17,6 +17,7 @@ public class UserRegister4PhoneDTO implements Serializable {
     private String phone;
     private String pwd;
     private String email;
+    @ApiModelProperty(name = "注册渠道", example = "1-Android 2-IOS")
     private byte registerChannel;
     private byte registerMode;
     private String invitUserId;

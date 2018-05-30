@@ -135,7 +135,7 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(value = "/register4Phone", method = RequestMethod.POST)
-    @ApiOperation(value = "注册", notes = "手机端用户注册,成功后响应头返回token")
+    @ApiOperation(value = "注册", notes = "手机端用户注册,成功后响应头返回token；注册渠道1-Android 2-IOS")
     public ResponseDTO register4Phone(UserRegister4PhoneDTO userRegister4PhoneDTO,
                                       String _appVersion,
                                       String _channelId,

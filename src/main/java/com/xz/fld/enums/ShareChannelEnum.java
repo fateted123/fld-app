@@ -4,7 +4,8 @@ import com.xz.fld.exception.BizException;
 
 public enum ShareChannelEnum {
 
-    weibo((byte)7, "微博"), weixin((byte)3, "微信"), weixin_pengyou((byte)4, "朋友圈"), qq((byte)5, "QQ"), qqzoo((byte)6, "QQ空间");
+    weibo((byte)7, "微博"), weixin((byte)3, "微信"), weixin_pengyou((byte)4, "朋友圈"), qq((byte)5, "QQ"), qqzoo((byte)6, "QQ空间"),
+    android((byte)1, "Android"),ios((byte)2, "IOS");
 
     private byte k;
     private String v;
