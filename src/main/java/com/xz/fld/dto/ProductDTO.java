@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductDTO {
+public class ProductDTO implements Cloneable {
     private Integer productId;
 
-    private Byte productFeature;
+    private String productFeature;
 
     private String productName;
 
@@ -83,5 +83,9 @@ public class ProductDTO {
     private String createTime;
 
     private String stagesRange;
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
 }

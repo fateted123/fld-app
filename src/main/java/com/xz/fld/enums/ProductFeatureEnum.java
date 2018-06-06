@@ -9,6 +9,7 @@ public enum ProductFeatureEnum {
     hight_rebate((byte)3, "返利高"),
     low_interest((byte)4, "利息低"),
     back_credit((byte)5, "还信用卡"),
+    other((byte)0, "其它"),
     fast_Lower_money((byte)6, "下款快");
 
     private byte k;

@@ -5,19 +5,21 @@ import com.xz.fld.dto.ProductDTO;
 import com.xz.fld.dto.ProductEnableDTO;
 import com.xz.fld.dto.ProductFeatureDTO;
 import com.xz.fld.enums.*;
+import com.xz.fld.exception.BizException;
 import com.xz.fld.mapper.ProductMapper;
 import com.xz.fld.util.DateUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ProductService {
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     @Value("${fld.image.url}")
     private String productImageUrl;
@@ -92,28 +94,69 @@ public class ProductService {
         dto.setSelectedProductFlag(product.getSelectedProductFlag());
         dto.setProductFeature(product.getProductFeature());
         dto.setStagesRange(product.getStagesRange());
+        dto.setProductFeature(product.getProductFeature());
+    }
+
+    private String formatFeature(String pf) {
+        if (StringUtils.isBlank(pf)) {
+            return "";
+        }
+
+        String[] arr = pf.split("-");
+        String re = "";
+        for (String m : arr) {
+            re += ProductFeatureEnum.getEnum(Byte.valueOf(m)).getV() + "-";
+        }
+
+        return re;
+    }
+
+    private List<ProductDTO> formatProductFeature(List<ProductDTO> list, ProductFeatureEnum penum) {
+
+        List<ProductDTO> tmp = new ArrayList<>();
+        for (ProductDTO dto : list) {
+            String feature = dto.getProductFeature();
+            if (StringUtils.isBlank(feature)) {
+                continue;
+            }
+
+            String[] arr = feature.split("-");
+            if (arr.length <= 0) {
+                continue;
+            }
+
+            List<String> farray = Arrays.asList(arr);
+
+            if (!farray.contains(String.valueOf(penum.getK()))) {
+                continue;
+            }
+
+            try {
+                ProductDTO xx = (ProductDTO)dto.clone();
+                xx.setProductFeature(String.valueOf(penum.getK()));
+                tmp.add(xx);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw new BizException("系统异常");
+            }
+
+        }
+
+        return tmp;
     }
 
     public ProductEnableDTO listEnableProducts() {
-        List<Product> products = productMapper.listEnableProduct(ProductFeatureEnum.easy_access.getK());
+        List<Product> products = productMapper.listEnableProduct(null);
         ProductEnableDTO dto = new ProductEnableDTO();
 
-        dto.setEasyProducts(formatProduct(products));
+        List<ProductDTO> dtoList = formatProduct(products);
 
-        products = productMapper.listEnableProduct(ProductFeatureEnum.hight_limit.getK());
-        dto.setHightLimitProducts(formatProduct(products));
-
-        products = productMapper.listEnableProduct(ProductFeatureEnum.hight_rebate.getK());
-        dto.setHightRebateProducts(formatProduct(products));
-
-        products = productMapper.listEnableProduct(ProductFeatureEnum.low_interest.getK());
-        dto.setLowInterestProducts(formatProduct(products));
-
-        products = productMapper.listEnableProduct(ProductFeatureEnum.back_credit.getK());
-        dto.setBackCreditProducts(formatProduct(products));
-
-        products = productMapper.listEnableProduct(ProductFeatureEnum.fast_Lower_money.getK());
-        dto.setFastLowerMoneyProducts(formatProduct(products));
+        dto.setFastLowerMoneyProducts(formatProductFeature(dtoList, ProductFeatureEnum.fast_Lower_money));
+        dto.setBackCreditProducts(formatProductFeature(dtoList, ProductFeatureEnum.back_credit));
+        dto.setLowInterestProducts(formatProductFeature(dtoList, ProductFeatureEnum.low_interest));
+        dto.setHightRebateProducts(formatProductFeature(dtoList, ProductFeatureEnum.hight_rebate));
+        dto.setHightLimitProducts(formatProductFeature(dtoList, ProductFeatureEnum.hight_limit));
+        dto.setEasyProducts(formatProductFeature(dtoList, ProductFeatureEnum.easy_access));
 
         return dto;
     }

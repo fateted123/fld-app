@@ -65,7 +65,7 @@ public class Product {
 
     private Date modifyTime;
 
-    private Byte productFeature;
+    private String productFeature;
 
     private String stagesRange;
 
@@ -317,12 +317,12 @@ public class Product {
         this.modifyTime = modifyTime;
     }
 
-    public Byte getProductFeature() {
+    public String getProductFeature() {
         return productFeature;
     }
 
-    public void setProductFeature(Byte productFeature) {
-        this.productFeature = productFeature;
+    public void setProductFeature(String productFeature) {
+        this.productFeature = productFeature == null ? null : productFeature.trim();
     }
 
     public String getStagesRange() {
